@@ -86,11 +86,17 @@
 
         /* links - navlink */
         --navlink-text-color: var(--dark-400);
+        --navlink-border-color: var(--transparent);
+        --navlink-background-color: var(--transparent);
+
         --navlink-text-hover-color: var(--blue);
-        --navlink-text-active-color: var(--blue);
-        --navlink-background-color: transparent;
+        --navlink-border-hover-color: var(--blue-light-opacity);
         --navlink-background-hover-color: var(--blue-light-opacity);
+        
+        --navlink-text-active-color: var(--blue);
+        --navlink-border-active-color: var(--blue-light-opacity);
         --navlink-background-active-color: var(--blue-light-opacity);
+        
 
     /* button */
     --btn-text-color: var(--white-100);
@@ -209,6 +215,12 @@ html,body{
     height: 100dvh;
 }
 
+.backoffice-wrapper{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: 100dvh;
+}
+
 .card{
     background-color: var(--card-background-color);
     border: 1px solid var(--card-border-color);
@@ -278,6 +290,41 @@ a{
     
     &:hover{
         text-decoration: underline;
+    }
+}
+
+.nav-links{
+    display: grid;
+    gap: 0.5rem;
+
+    .nav-link{
+        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out,border-color 0.1s ease-in-out, color 0.1s ease-in-out;
+        background-color: var(--navlink-background-color);
+        border: 1px solid var(--navlink-border-color);
+        color: var(--navlink-text-color);
+        border-radius: var(--border-radius);
+        padding: 1rem 1.5rem;
+        text-decoration: none;
+        font-size: 1em;
+        font-family: var(--font-standard);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+
+        &:hover{
+            background-color: var(--navlink-background-hover-color);
+            border-color: var(--navlink-border-hover-color);
+            color: var(--navlink-text-hover-color);
+            text-decoration: none;
+        }
+
+        &.active{
+            background-color: var(--navlink-background-active-color);
+            border-color: var(--navlink-border-active-color);
+            color: var(--navlink-text-active-color);
+            text-decoration: none;
+        }
     }
 }
 
@@ -566,6 +613,48 @@ textarea,
 }
 
 /* section */
+#sidebar{
+    border-right: 1px solid var(--border-color);
+    padding: 2rem;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 2rem;
+
+}
+
+/* logotype */
+.logotype{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 26px;
+    font-weight: 700;
+    font-family: var(--font-logo);
+    color: var(--text-color);
+
+    a{
+        font-size: 26px;
+        font-weight: 700;
+        font-family: var(--font-logo);
+        color: var(--text-color);
+        text-decoration: none; 
+
+        &:hover{
+            text-decoration: none;
+        }   
+    }
+}
+
+#header{
+    border-bottom: 1px solid var(--border-color);
+    padding: 2rem;
+}
+
+#main{
+    padding: 2rem;
+    
+}
+
 #signup,
 #login{
     .card{
