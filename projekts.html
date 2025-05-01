@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <script src="https://kit.fontawesome.com/a576612222.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="site.css">
     <title>Projekts - BackOffice Alpha Portal</title>
@@ -30,7 +33,6 @@
                     <span>Members</span>
                 </a>
             </nav>
-
         </aside>
         <main>
             <header id="header">
@@ -38,8 +40,6 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="search" class="form-search-input" placeholder="Search anything..."/>
                 </form>
-                
-                
                 <div id="notification-container">
                     <button type="button" data-type="dropdown" data-target="#notifications-dropdown" class="btn-notification">
                         <i class="dot dot-red fa-solid fa-circle"></i>
@@ -58,7 +58,7 @@
                                 </div>
                                 <span class="message">Tim Skoglund signed in.</span>
                                 <span class="time">15min ago</span>
-                                <button class="btn-close"></button>
+                                <button class="btn-remove"></button>
                             </div>
                         </div>
                         <div class="notifications">
@@ -68,13 +68,11 @@
                                 </div>
                                 <span class="message">Daniel Toivonen signed in.</span>
                                 <span class="time">20min ago</span>
-                                <button class="btn-close"></button>
+                                <button class="btn-remove"></button>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                
+                </div>  
                 <div id="account-container">
                     <button type="button" data-type="dropdown" data-target="#account-dropdown" class="btn-account">
                         <img src="images/users/user-template-male-green.svg" alt="template avatar">
@@ -110,14 +108,134 @@
                     </div>
                 </div>
             </header>
-            <div id="main">
-                content
+            <div id="projects" class="page">
+                <div class="page-header">
+                    <h1>Projects</h1>
+                    <button type="button" class="btn" data-type="modal" data-target="#add-project-modal">
+                        <i class="fa-duotone fa-solid fa-plus"></i>   
+                        <span>Add Project</span>
+                    </button>
+                </div>
             </div>
         </main>
     </div>
+
+
+    <section id="add-project-modal" class="modal modal-show">
+        <div class="card">
+            <div class="card-header">
+                <h3>Add Project</h3>
+                <button data-type="close" data-target="#add-project-modal" class="btn-close"></button>
+            </div>
+            <div class="card-body">
+                
+                <form asp-controller="" asp-action="" method="post" enctype="multipart/form-data" novalidate>
+                    <div class="form-group">
+                        <div id="upload-trigger" class="image-preview-container project-image">
+                            <img id="image-preview" src="#" class="hide" />
+                            <div id="image-preview-icon-container" class="circle circle-gray">
+                                <i id="image-preview-icon" class="fa-duotone fa-solid fa-camera" style="--fa-primary-color: #bdbdbd; --fa-secondary-color: #ffffff; --fa-secondary-opacity: 1;"></i>
+                            </div>
+                        </div>
+                        <input type="file" id="image-upload" accept="image/*"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-lable">Project Name</label>
+                        <input class="form-input" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Client Name</label>
+                        <div class="form-select" data-placeholder="Choose a client">
+                            <Button type ="button" class="form-select-trigger">
+                                <span class="form-select-text"></span>
+                            </Button>
+                            <ul class="form-select-options">
+                                <li class="form-select-option" data-value="1">Client 1</li>
+                                <li class="form-select-option" data-value="2">Client 2</li>
+                            </ul>
+                            <input type="hidden" name="client-select-value" />
+                        </div>
+                    </div>
+
+
+
+
+
+                <div class="form-group">
+                    <label for="form-lable">Description</label>
+                    <div class="wysiwyg">
+                        <textarea id="add-project-description"></textarea>
+                        <div id="add-project-description-wysiwyg-editor" class="wysiwyg-editor"></div>
+                        <div id="add-project-description-wysiwyg-toolbar" class="wysiwyg-toolbar">
+                            <span class="ql-formats">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                                <button class="ql-underline"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-align" value=""></button>
+                                <button class="ql-align" value="center"></button>
+                                <button class="ql-align" value="right"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-list" value="bullet"></button>
+                                <button class="ql-list" value="ordered"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-link"></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                    
+                    <div class="form-horizontal-groupp">
+                        <div class="form-group">
+                            <label for="form-lable">Start date</label>
+                            <input class="form-input" type="date" />
+                        </div>
+                        <div class="form-group">
+                            <label for="form-lable">End Date</label>
+                            <input class="form-input" type="date" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Member</label>
+                        <div class="form-select" data-placeholder="Choose a member">
+                            <Button type ="button" class="form-select-trigger">
+                                <span class="form-select-text"></span>
+                            </Button>
+                            <ul class="form-select-options">
+                                <li class="form-select-option" data-value="1">Tim Skoglund</li>
+                                <li class="form-select-option" data-value="2">Daniel Toivonen</li>
+                            </ul>
+                            <input type="hidden" name="member-select-value" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-lable">Budget</label>
+                        <div class="form-input-extended">
+                            <i class="fa-duotone fa-solid fa-dollar-sign"></i>
+                            <input class="form-input" type="text" />
+                        </div>
+                    </div>
+                    
+                    <button type="subbmit" class="btn">Create</button>
+                </form>
+
+            </div>
+        </div>
+    </section>
 
     
     <script src="site.js"></script>
 </body>
 </html>
-<!--1:58  -->
+
+<!-- 6:42 -->

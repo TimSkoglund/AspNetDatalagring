@@ -1,3 +1,57 @@
+// ==============================
+// Quill.js - Rika textredigerare
+// ==============================
+const addProjectDescriptionTextarea = document.getElementById('add-project-description') 
+const addProjectDescriptionQuill = new Quill('#add-project-description-wysiwyg-editor', {
+    modules: {
+      syntax: true,
+      toolbar: '#add-project-description-wysiwyg-toolbar'
+    },
+    theme: 'snow',
+    placeholder: 'Type something...'
+  });
+
+  addProjectDescriptionQuill.on('text-change', function() {
+    addProjectDescriptionTextarea.value = addProjectDescriptionQuill.root.innerHTML
+    })
+
+
+// ==============================
+// ladda upp bild och visa förhandsgranskning
+// ==============================
+const uploadTrigger = document.getElementById('upload-trigger')
+const fileInput = document.getElementById('image-upload')
+const imagePreview = document.getElementById('image-preview')
+const imagePreviewIcon = document.getElementById('image-preview-icon')
+const imagePreviewIconContainer = document.getElementById('image-preview-icon-container')
+
+uploadTrigger.addEventListener('click', function () {
+    fileInput.click()
+})
+
+fileInput.addEventListener('change', function (e) {
+    const file = e.target.files[0]
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader()
+
+        reader.onload = (e) => {
+            imagePreview.src = e.target.result
+            imagePreview.classList.remove('hide')
+            imagePreviewIconContainer.classList.add('selected')
+            imagePreviewIcon.classList.remove('fa-camera')
+            imagePreviewIcon.classList.add('fa-pen-to-square')  
+            
+
+        }
+
+        reader.readAsDataURL(file)
+    }
+})
+
+
+// ==============================
+// Hantera dropdown-menyer (öppna/stäng på klick)
+// ==============================
 const dropdowns = document.querySelectorAll('[data-type="dropdown"]');
 
 document.addEventListener('click', function (event) {
@@ -28,8 +82,33 @@ document.addEventListener('click', function (event) {
 });
 
 
+// ==============================
+// Hantera modaler (öppna och stäng)
+// ==============================
+const modals = document.querySelectorAll('[data-type="modal"]');
+modals.forEach(modal => {
+    modal.addEventListener('click', function () {
+        const targetid = modal.getAttribute('data-target')
+        const targetElement = document.querySelector(targetid)
+
+        targetElement.classList.toggle('modal-show')
+    })
+})
+
+const closeButtons = document.querySelectorAll('[data-type="close"]');
+closeButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        const targetid = button.getAttribute('data-target')
+        const targetElement = document.querySelector(targetid)
+
+        targetElement.classList.remove('modal-show')
+    })
+})
 
 
+// ==============================
+// Anpassad form-select dropdown
+// ==============================
 document.querySelectorAll('.form-select').forEach(select => {
     const trigger = select.querySelector('.form-select-trigger')
     const triggerText = trigger.querySelector('.form-select-text')

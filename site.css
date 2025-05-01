@@ -64,6 +64,11 @@
     --border-focus-color: var(--blue-semilight);
     --divider-color: var(--gray-200);
     --divider-background-color: var(--white-100);
+
+    /* shapes - circle */
+    --circle-gray-text-color: var(--whoite-100);
+    --circle-gray-border-color: var(--dark-opacity-60);
+    --circle-gray-background-color: var(--dark-opacity-60);
     
     /* standard text & background */
     --text-color: var(--dark-400);
@@ -265,6 +270,57 @@ html,body{
     height: 100dvh;
 }
 
+#sidebar{
+    border-right: 1px solid var(--border-color);
+    padding: 1.5rem 2rem;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 2rem;
+
+}
+
+#header{
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem 2rem;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr auto auto;
+    gap: 3rem;
+}
+
+.page{
+    padding: 2rem;
+
+    .page-header{
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 2rem;
+    }
+}
+/* modals */
+.modal{
+    z-index: 500;
+    background-color: var(--modal-background-color);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+
+    .btn-close{
+        z-index: 999;
+    }
+
+    &.modal-show{
+        display: flex !important;
+    }
+}
+
+/* cards */
 .card{
     position: relative;
     background-color: var(--card-background-color);
@@ -514,7 +570,7 @@ a{
 .btn{
 transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, color 0.1s ease-in-out;
 background-color: var(--btn-background-color);
-border: 1px solid var(--btn-border-color);
+border: 2px solid var(--btn-border-color);
 color: var(--btn-text-color);
 border-radius: var(--border-radius);
 text-decoration: none;
@@ -528,9 +584,12 @@ display: flex;
 justify-content: center;
 align-items: center;
 cursor: pointer;
+gap: 0.5rem;
+min-width: 150px;
+
 &:hover{
         background-color: var(--btn-hover-background-color);
-        border: 1px solid var(--btn-background-color);
+        border: 2px solid var(--btn-background-color);
         color: var(--btn-hover-color);
 
     }
@@ -602,7 +661,8 @@ cursor: pointer;
     }
 }
 
-.btn-close{
+.btn-close,
+.btn-remove{
     transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, color 0.1s ease-in-out;
     background-color: var(--btn-close-background-color);
     color: var(--btn-close-text-color);
@@ -718,6 +778,17 @@ form{
     display: grid;
     gap: 0.3rem;
     margin-bottom: 1rem;
+    width: 100%;
+    position: relative;
+}
+
+.form-horizontal-groupp{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+    position: relative;
+    
 }
 
 .form-checkbox-group{
@@ -744,6 +815,10 @@ form{
 .search-form{
     display: flex;
     align-items: center;
+}
+
+input[type="date"]{
+    width: 100%;
 }
 
 .form-search-input{
@@ -933,6 +1008,19 @@ form{
     }
 }
 
+.form-input-extended{
+    position: relative;
+    i{
+        position: absolute;
+        z-index: 1;
+        left: 14px;
+        top: 12px;
+    }
+    .form-input{
+        padding-left: 2rem;
+    }
+}
+
 
 textarea,
 .form-textarea {
@@ -940,15 +1028,109 @@ textarea,
     min-height: 150px;
 }
 
-/* section */
-#sidebar{
-    border-right: 1px solid var(--border-color);
-    padding: 1.5rem 2rem;
-    display: grid;
-    grid-template-rows: auto auto 1fr;
-    gap: 2rem;
+.wysiwyg textarea{
+    display: none;
+}
+
+.wysiwyg-editor{
+    z-index: 0;
+    width: 100%;
+    font-size: 1em;
+    font-weight: 400;
+    font-style: normal;
+    font-family: var(--font-standard);
+    color: var(--form-input-text-color);
+    border: none !important;
+    background-color: var(--form-input-background-color);
+    transition: border-color 0.1s ease-in-out;
+    border-radius: var(--border-radius);
+    min-height: 150px;
+}
+
+.ql-editor{
+    border: 1px solid var(--form-input-border-color);
+    border-radius: var(--border-radius);
+
+    &:focus{
+        border: 1px solid var(--form-input-border-focus-color);
+        border-radius: var(--border-radius);
+    }
+    &.ql-blank::before{
+        color: var(--form-input-placeholder-color);
+        font-size: 0.9em;
+        font-style: normal;
+        font-weight: 400;
+    }
+}
+
+.wysiwyg-toolbar{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: none !important;
+    border-top: 1px solid var(--form-input-border-color) !important;
+    border-radius: var(--border-radius-bottom);
+    color: var(--form-input-text-color);
+    background-color: var(--transparent);
+}
+
+
+/* image previewer */
+.image-preview-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border: 2px dashed var(--border-color);
+    margin: auto;
+    cursor: pointer;
+    overflow: hidden;
+
+    &.project-image{
+        border-radius: var(--border-radius);
+        overflow: hidden;
+    }
+
+    &.user-image{
+        border-radius: 50%;
+        overflow: hidden;     
+    }
+
+    .circle{
+        position: absolute;
+
+        &.selected{
+            bottom: 3%;
+        }
+    }
+}
+
+#image-upload{
+    display: none;
+}
+
+/* shapes */
+.circle{
+    border-radius: 50%;
+    height: 48px;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+
+    &.circle-gray{
+        color: var(--circle-gray-text-color);
+        border: 1px solid var(--circle-gray-border-color);
+        background-color: var(--circle-gray-background-color);
+    }
+
 
 }
+
 
 /* logotype */
 .logotype{
@@ -971,20 +1153,6 @@ textarea,
             text-decoration: none;
         }   
     }
-}
-
-#header{
-    border-bottom: 1px solid var(--border-color);
-    padding: 1.5rem 2rem;
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1fr auto auto;
-    gap: 3rem;
-}
-
-#main{
-    padding: 2rem;
-    
 }
 
 #notification-container{
@@ -1061,7 +1229,7 @@ textarea,
                 color: var(--user-notification-text-muted-color);
             }
 
-            .btn-close{
+            .btn-remove{
                 grid-area: btn;
             }
         }
@@ -1116,5 +1284,15 @@ textarea,
 
     .form-checkbox-group{
         margin: 2rem 0;
+    }
+}
+
+#add-project-modal{
+    .card{
+        width: 550px;
+        margin-bottom: 1rem;
+    }
+    .btn{
+        margin-top: 2rem;
     }
 }
