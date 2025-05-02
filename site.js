@@ -1,145 +1,129 @@
 // ==============================
-// Quill.js - Rika textredigerare
+// Dynamisk initiering av Quill-editors
 // ==============================
-const addProjectDescriptionTextarea = document.getElementById('add-project-description') 
-const addProjectDescriptionQuill = new Quill('#add-project-description-wysiwyg-editor', {
-    modules: {
-      syntax: true,
-      toolbar: '#add-project-description-wysiwyg-toolbar'
-    },
-    theme: 'snow',
-    placeholder: 'Type something...'
-  });
+document.querySelectorAll('.wysiwyg').forEach(container => {
+    const textarea = container.querySelector('textarea');
+    const editorEl = container.querySelector('.wysiwyg-editor');
+    const toolbarEl = container.querySelector('.wysiwyg-toolbar');
 
-  addProjectDescriptionQuill.on('text-change', function() {
-    addProjectDescriptionTextarea.value = addProjectDescriptionQuill.root.innerHTML
-    })
+    const quill = new Quill(editorEl, {
+        modules: {
+            syntax: true,
+            toolbar: toolbarEl
+        },
+        theme: 'snow',
+        placeholder: 'Type something...'
+    });
+
+    quill.on('text-change', () => {
+        textarea.value = quill.root.innerHTML;
+    });
+});
 
 
 // ==============================
-// ladda upp bild och visa förhandsgranskning
+// Dynamisk hantering av filuppladdning
 // ==============================
-const uploadTrigger = document.getElementById('upload-trigger')
-const fileInput = document.getElementById('image-upload')
-const imagePreview = document.getElementById('image-preview')
-const imagePreviewIcon = document.getElementById('image-preview-icon')
-const imagePreviewIconContainer = document.getElementById('image-preview-icon-container')
+document.querySelectorAll('.image-preview-container').forEach(container => {
+    const fileInput = container.parentElement.querySelector('input[type="file"]');
+    const previewImg = container.querySelector('img');
+    const iconContainer = container.querySelector('.circle');
+    const icon = iconContainer?.querySelector('i');
+    
+    container.addEventListener('click', () => {
+        fileInput?.click();
+    });
 
-uploadTrigger.addEventListener('click', function () {
-    fileInput.click()
-})
-
-fileInput.addEventListener('change', function (e) {
-    const file = e.target.files[0]
-    if (file && file.type.startsWith('image/')) {
-        const reader = new FileReader()
-
-        reader.onload = (e) => {
-            imagePreview.src = e.target.result
-            imagePreview.classList.remove('hide')
-            imagePreviewIconContainer.classList.add('selected')
-            imagePreviewIcon.classList.remove('fa-camera')
-            imagePreviewIcon.classList.add('fa-pen-to-square')  
-            
-
+    fileInput?.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                previewImg.src = e.target.result;
+                previewImg.classList.remove('hide');
+                iconContainer?.classList.add('selected');
+                icon?.classList.replace('fa-camera', 'fa-pen-to-square');
+            };
+            reader.readAsDataURL(file);
         }
-
-        reader.readAsDataURL(file)
-    }
-})
+    });
+});
 
 
 // ==============================
-// Hantera dropdown-menyer (öppna/stäng på klick)
+// Dropdowns (öppna/stäng)
 // ==============================
-const dropdowns = document.querySelectorAll('[data-type="dropdown"]');
-
 document.addEventListener('click', function (event) {
-    let clickedDropdown = null;
+    const allDropdowns = document.querySelectorAll('.dropdown');
+    let clicked = false;
 
-    dropdowns.forEach(dropdown => {
-        const targetid = dropdown.getAttribute('data-target');
-        const targetElement = document.querySelector(targetid);
+    document.querySelectorAll('[data-type="dropdown"]').forEach(trigger => {
+        const targetSelector = trigger.getAttribute('data-target');
+        const target = document.querySelector(targetSelector);
 
-        if (dropdown.contains(event.target)) {
-            clickedDropdown = targetElement;
-
-            document.querySelectorAll('.dropdown.dropdown-show').forEach(openDropdown => {
-                if (openDropdown !== targetElement) {
-                    openDropdown.classList.remove('dropdown-show');
-                }
-            });
-
-            targetElement.classList.toggle('dropdown-show');
+        if (trigger.contains(event.target)) {
+            clicked = true;
+            allDropdowns.forEach(d => d !== target && d.classList.remove('dropdown-show'));
+            target.classList.toggle('dropdown-show');
         }
     });
 
-    if (!clickedDropdown && !event.target.closest('.dropdown')) {
-        document.querySelectorAll('.dropdown.dropdown-show').forEach(openDropdown => {
-            openDropdown.classList.remove('dropdown-show');
-        });
+    if (!clicked && !event.target.closest('.dropdown')) {
+        allDropdowns.forEach(d => d.classList.remove('dropdown-show'));
     }
 });
 
 
 // ==============================
-// Hantera modaler (öppna och stäng)
+// Modaler (öppna/stäng)
 // ==============================
-const modals = document.querySelectorAll('[data-type="modal"]');
-modals.forEach(modal => {
-    modal.addEventListener('click', function () {
-        const targetid = modal.getAttribute('data-target')
-        const targetElement = document.querySelector(targetid)
+document.querySelectorAll('[data-type="modal"]').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+        const target = document.querySelector(trigger.getAttribute('data-target'));
+        target?.classList.toggle('modal-show');
+    });
+});
 
-        targetElement.classList.toggle('modal-show')
-    })
-})
-
-const closeButtons = document.querySelectorAll('[data-type="close"]');
-closeButtons.forEach(button => {
-    button.addEventListener('click', function () {
-        const targetid = button.getAttribute('data-target')
-        const targetElement = document.querySelector(targetid)
-
-        targetElement.classList.remove('modal-show')
-    })
-})
+document.querySelectorAll('[data-type="close"]').forEach(closeBtn => {
+    closeBtn.addEventListener('click', () => {
+        const target = document.querySelector(closeBtn.getAttribute('data-target'));
+        target?.classList.remove('modal-show');
+    });
+});
 
 
 // ==============================
-// Anpassad form-select dropdown
+// Anpassade form-select dropdowns
 // ==============================
 document.querySelectorAll('.form-select').forEach(select => {
-    const trigger = select.querySelector('.form-select-trigger')
-    const triggerText = trigger.querySelector('.form-select-text')
-    const options = select.querySelectorAll('.form-select-option')
-    const hiddenInput = select.querySelector('input[type="hidden"]')
-    const placeholder = select.dataset.placeholder || "Choose"
+    const trigger = select.querySelector('.form-select-trigger');
+    const text = select.querySelector('.form-select-text');
+    const options = select.querySelectorAll('.form-select-option');
+    const hidden = select.querySelector('input[type="hidden"]');
+    const placeholder = select.dataset.placeholder || 'Choose';
 
-    const setValue = (value = "", text = placeholder) => {
-        triggerText.textContent = text
-        hiddenInput.value = value
-        select.classList.toggle('has-placeholder', !value)
+    const setValue = (value = '', label = placeholder) => {
+        text.textContent = label;
+        hidden.value = value;
+        select.classList.toggle('has-placeholder', !value);
     };
 
-    setValue()
+    setValue();
 
-    trigger.addEventListener('click', (e) => {
-        e.stopPropagation()
-        document.querySelectorAll('.form-select.open')
-            .forEach(el => el !== select && el.classList.remove('open'))
-        select.classList.toggle('open')
-    })
+    trigger?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.form-select.open').forEach(s => s !== select && s.classList.remove('open'));
+        select.classList.toggle('open');
+    });
 
-    options.forEach(option => 
+    options.forEach(option => {
         option.addEventListener('click', () => {
-            setValue(option.dataset.value, option.textContent)
-            select.classList.remove('open') 
-        })
-    )
+            setValue(option.dataset.value, option.textContent);
+            select.classList.remove('open');
+        });
+    });
 
-    document.addEventListener('click', e => {
-        if (!select.contains(e.target))
-            select.classList.remove('open')
-        })
-    })
+    document.addEventListener('click', (e) => {
+        if (!select.contains(e.target)) select.classList.remove('open');
+    });
+});

@@ -108,6 +108,7 @@
                     </div>
                 </div>
             </header>
+
             <div id="projects" class="page">
                 <div class="page-header">
                     <h1>Projects</h1>
@@ -117,11 +118,63 @@
                     </button>
                 </div>
 
+
                 <section class="project-list">
-                    <div class="card">
+                    <div class="project card" data-project-id="1">
+                        <div class="card-header">
+                            <div class="project-image">
+                                <img src="images/projects/project-template-purple.svg" alt="template project">
+                            </div>
+                            <span class="project-name">Website Redesign</span>
+                            <span class="client-name">GitLab Inc.</span>
+                            
 
+                            <div id="project-account-container">
+                                <button type="button" data-type="dropdown" data-target="#project-dropdown-1" class="btn-action">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <div id="project-dropdown-1" class="dropdown ">
+                                    <nav class="dropdown-actions">
+                                        <button data-type="modal" data-target="#edit-project-modal" class="dropdown-action">
+                                            <i class="fa-duotone fa-solid fa-pen-to-square"></i>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button class="dropdown-action" href="#">
+                                            <i class="fa-duotone fa-solid fa-user-plus" style="--fa-primary-opacity: 0.4; --fa-secondary-opacity: 1;"></i>
+                                            <span>Add Member</span>
+                                        </button>
+                                    </nav> 
+                                    <div class="dropdown-body">
+                                        <div class="divider"></div>
+                                        <nav class="dropdown-actions">
+                                            <a class="dropdown-action remove" href="#">
+                                                <i class="fa-duotone fa-solid fa-trash"></i>
+                                                <span>Delete Project</span>
+                                            </a>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>It is necessary to develop a website redesign in a corporate style.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="badge badge-warning">
+                                <i class="fa-duotone fa-solid fa-clock"></i>
+                                <span>5 day left</span>
+                            </div>
+                            <div class="members">
+                                <div class="user-image">
+                                    <img src="images/users/user-template-male-green.svg" alt="template user">
+                                </div>
+                                <div class="user-image">
+                                    <img src="images/users/user-template-male-green.svg" alt="template user">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
+                    
                 </section>
 
             </div>
@@ -227,6 +280,124 @@
                     </div>
                     
                     <button type="subbmit" class="btn">Create</button>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="edit-project-modal" class="modal">
+        <div class="card">
+            <div class="card-header">
+                <h3>Edit Project</h3>
+                <button data-type="close" data-target="#edit-project-modal" class="btn-close"></button>
+            </div>
+            <div class="card-body">
+                
+                <form asp-controller="" asp-action="" method="post" enctype="multipart/form-data" novalidate>
+                    <div class="form-group">
+                        <div id="upload-trigger" class="image-preview-container project-image">
+                            <img id="image-preview" src="#" class="hide" />
+                            <div id="image-preview-icon-container" class="circle circle-gray">
+                                <i id="image-preview-icon" class="fa-duotone fa-solid fa-camera" style="--fa-primary-color: #bdbdbd; --fa-secondary-color: #ffffff; --fa-secondary-opacity: 1;"></i>
+                            </div>
+                        </div>
+                        <input type="file" id="image-upload" accept="image/*"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-label">Project Name</label>
+                        <input class="form-input" type="text" placeholder="Enter project name..." />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Client Name</label>
+                        <div class="form-select" data-placeholder="Choose a client">
+                            <Button type ="button" class="form-select-trigger">
+                                <span class="form-select-text"></span>
+                            </Button>
+                            <ul class="form-select-options">
+                                <li class="form-select-option" data-value="1">Client 1</li>
+                                <li class="form-select-option" data-value="2">Client 2</li>
+                            </ul>
+                            <input type="hidden" name="client-select-value" />
+                        </div>
+                    </div>
+
+                <div class="form-group">
+                    <label for="form-lable">Description</label>
+                    <div class="wysiwyg">
+                        <textarea id="edit-project-description"></textarea>
+                        <div id="edit-project-description-wysiwyg-editor" class="wysiwyg-editor"></div>
+                        <div id="edit-project-description-wysiwyg-toolbar" class="wysiwyg-toolbar">
+                            <span class="ql-formats">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                                <button class="ql-underline"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-align" value=""></button>
+                                <button class="ql-align" value="center"></button>
+                                <button class="ql-align" value="right"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-list" value="bullet"></button>
+                                <button class="ql-list" value="ordered"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-link"></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="form-horizontal-groupp">
+                        <div class="form-group">
+                            <label for="form-lable">Start date</label>
+                            <input class="form-input" type="date" />
+                        </div>
+                        <div class="form-group">
+                            <label for="form-lable">End Date</label>
+                            <input class="form-input" type="date" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Member</label>
+                        <div class="form-select" data-placeholder="Choose a member">
+                            <Button type ="button" class="form-select-trigger">
+                                <span class="form-select-text"></span>
+                            </Button>
+                            <ul class="form-select-options">
+                                <li class="form-select-option" data-value="1">Tim Skoglund</li>
+                                <li class="form-select-option" data-value="2">Daniel Toivonen</li>
+                            </ul>
+                            <input type="hidden" name="member-select-value" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-lable">Budget</label>
+                        <div class="form-input-extended">
+                            <i class="fa-duotone fa-solid fa-dollar-sign"></i>
+                            <input class="form-input" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Status</label>
+                        <div class="form-select" data-placeholder="Choose a status">
+                            <Button type ="button" class="form-select-trigger">
+                                <span class="form-select-text"></span>
+                            </Button>
+                            <ul class="form-select-options">
+                                <li class="form-select-option" data-value="1">STARTED</li>
+                                <li class="form-select-option" data-value="2">COMPLEATED</li>
+                            </ul>
+                            <input type="hidden" name="client-select-value" value="1" />
+                        </div>
+                    </div>
+                    
+                    <button type="subbmit" class="btn">Save</button>
                 </form>
 
             </div>
