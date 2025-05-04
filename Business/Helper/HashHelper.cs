@@ -6,4 +6,10 @@ public static class HashHelper
     {
         return BCrypt.Net.BCrypt.HashPassword(input);
     }
+
+    public static bool VerifyHash(string input, string storedHash)
+    {
+        return BCrypt.Net.BCrypt.Verify(input, storedHash);
+
+    }
 }

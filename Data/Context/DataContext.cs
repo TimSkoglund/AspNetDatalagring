@@ -9,4 +9,5 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
     public DbSet<ProductEntity>  Products   => Set<ProductEntity>();
     public DbSet<StatusTypeEntity> StatusTypes => Set<StatusTypeEntity>();
     public DbSet<UserEntity>    Users      => Set<UserEntity>();
+    public DbSet<ProjectEntity>    Projects      => Set<ProjectEntity>();
 }

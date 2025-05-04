@@ -8,10 +8,10 @@ namespace Data.Repositories.User;
 public class UserRepository(DataContext ctx)
     : BaseRepository<UserEntity>(ctx), IUserRepository
 {
-    public async Task<UserEntity?> GetUserAsync(string email, string passwordHash, CancellationToken cancellationToken)
+    public async Task<UserEntity?> GetUserAsync(string email, CancellationToken cancellationToken)
     {
         return await Db.FirstOrDefaultAsync(
-            u => u.Email == email && u.Password == passwordHash,
+            u => u.Email == email,
             cancellationToken);
     }
 }

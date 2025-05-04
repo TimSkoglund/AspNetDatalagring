@@ -3,5 +3,5 @@ using Data.Repositories.Base;
 
 namespace Data.Repositories.Project;
 
-public interface IProjektRepository : IBaseRepository<ProjectEntity>
+public interface IProjectRepository : IBaseRepository<ProjectEntity>
 { }

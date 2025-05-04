@@ -5,6 +5,6 @@ namespace Data.Repositories.User
 {
     public interface IUserRepository : IBaseRepository<UserEntity>
     {
-        public Task<UserEntity?> GetUserAsync(string email, string passwordHash, CancellationToken cancellationToken);
+        public Task<UserEntity?> GetUserAsync(string email, CancellationToken cancellationToken);
     }
 }

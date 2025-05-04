@@ -17,11 +17,16 @@ public class UserService(IUserRepository userRepository) : IUserService
 
     public async Task<bool> LoginAsync(string email, string password, CancellationToken cancellationToken)
     {
-        var passwordHash = HashHelper.GetHash(password);
-        
+
+        if (string.IsNullOrEmpty(email))
+            return false;
+
+        if (string.IsNullOrEmpty(password))
+            return false;
+
         var user =  await userRepository.GetUserAsync(
-            email, passwordHash, cancellationToken);
-        
-        return user != null;
+            email, cancellationToken);
+
+        return HashHelper.VerifyHash(password, user.Password);
     }
 }

@@ -1,15 +1,15 @@
 ﻿@page "/projects"
-@using Business.Services.Customer
+@using Business.Services.Project
 @attribute [StreamRendering]
-@inject ICustomerService CustomerService
+@inject IProjectService ProjectService
 
 <PageTitle>Projekt</PageTitle>
 
-<h1>Projekt</h1>
+<h1>Projects</h1>
 
-<p>Projekt:</p>
+<p>Projects:</p>
 
-@if (customers == null)
+@if (projects == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -19,15 +19,13 @@ else
         <thead>
         <tr>
             <th>Id</th>
-            <th>Name</th>
         </tr>
         </thead>
         <tbody>
-        @foreach (var customer in customers)
+        @foreach (var project in projects)
         {
             <tr>
-                <td>@customer.Id</td>
-                <td>@customer.Name</td>
+                <td>@project.Id</td>
             </tr>
         }
         </tbody>
@@ -36,10 +34,10 @@ else
 
 @code {
     
-    private List<Business.Models.Customer> customers;
+    private List<Business.Models.Project> projects;
 
     protected override async Task OnInitializedAsync()
     {
-        customers = await CustomerService.GetCustomersAsync(CancellationToken.None);
+        projects = await ProjectService.GetProjectsAsync(CancellationToken.None);
     }
 }
