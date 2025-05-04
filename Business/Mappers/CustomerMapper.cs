@@ -26,4 +26,9 @@ public static class CustomerMapper
     {
         return customers != null ? customers.Select(Map).ToList() : new List<Customer>();
     }
+
+    public static List<CustomerEntity> Map(List<Customer> customers)
+    {
+        return customers != null ? customers.Select(Map).ToList() : new List<CustomerEntity>();
+    }
 }

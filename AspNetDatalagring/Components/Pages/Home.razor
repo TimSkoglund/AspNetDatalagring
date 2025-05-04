@@ -21,9 +21,12 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        string value = await JS.InvokeAsync<string>("localStorageHelper.get", "isLoggedIn");
-        isLoggedIn = value == "true";
-        StateHasChanged();
+        if (firstRender)
+        {
+            string value = await JS.InvokeAsync<string>("localStorageHelper.get", "isLoggedIn");
+            isLoggedIn = value == "true";
+            StateHasChanged();
+        }
     }
 
     private async Task Login()

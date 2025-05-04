@@ -39,6 +39,8 @@ using (var scope = app.Services.CreateScope())
     ctx.Database.Migrate();
 
     SeedUser(ctx);
+    SeedProducts(ctx);
+    SeedCustomer(ctx);
 
 }
 
@@ -77,6 +79,61 @@ void SeedUser(DataContext ctx)
         });
 
         ctx.Users.Add(entity);
+        ctx.SaveChanges();
+    }
+}
+
+void SeedProducts(DataContext ctx)
+{
+    // Seed the database with products if it doesn't exist
+
+    if (ctx.Products.Any() is false)
+    {
+        var enteties = ProductMapper.Map(new List<Data.Entities.Product>()
+        {
+            new Data.Entities.Product()
+            {
+                Price = 240,
+                ProductName = "Road construction"
+            },
+            new Data.Entities.Product()
+            {
+                Price = 140,
+                ProductName = "Flooring"
+            },
+            new Data.Entities.Product()
+            {
+                Price = 40,
+                ProductName = "Consultation"
+            },
+        });
+
+        ctx.Products.AddRange(enteties);
+        ctx.SaveChanges();
+    }
+}
+
+void SeedCustomer(DataContext ctx)
+{
+    if (ctx.Customers.Any() is false)
+    {
+        var enteties = CustomerMapper.Map(new List<Business.Models.Customer>()
+        {
+            new Business.Models.Customer
+            {
+                Name = "Brett Hull"
+            },
+            new Business.Models.Customer
+            {
+                Name = "Steven Hawkins"
+            },
+            new Business.Models.Customer
+            {
+                Name = "Jane Doe"
+            },
+        });
+
+        ctx.Customers.AddRange(enteties);
         ctx.SaveChanges();
     }
 }

@@ -25,7 +25,7 @@
     {
         var project = new Business.Models.Project
         {
-            Title = name
+            Name = name
         };
 
         await ProjectService.CreateProjectAsync(project, CancellationToken.None);

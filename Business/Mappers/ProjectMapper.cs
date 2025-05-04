@@ -9,8 +9,15 @@ public static class ProjectMapper
     {
         return project != null ? new ProjectEntity
         {
-            Id = project.Id,
-            Title = project.Title
+            Name = project.Name,
+            Budget = project.Budget,
+            CustomerId = project.CustomerId,
+            Description = project.Description,
+            EndDate = project.EndDate,  
+            ProductId = project.ProductId,
+            StartDate = project.StartDate,
+            StatusId = project.StatusId,
+            UserId = project.UserId
         } : null;
     }
     
@@ -19,7 +26,15 @@ public static class ProjectMapper
         return project != null ? new Project
         {
             Id = project.Id,
-            Title = project.Title
+            Name = project.Name,
+            Budget = project.Budget,
+            CustomerId = project.CustomerId,
+            Description = project.Description,
+            EndDate = project.EndDate,
+            ProductId = project.ProductId,
+            StartDate = project.StartDate,
+            StatusId = project.StatusId,
+            UserId = project.UserId
         } : null;
     }
 
