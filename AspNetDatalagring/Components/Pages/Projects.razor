@@ -1,0 +1,45 @@
+﻿@page "/projects"
+@using Business.Services.Customer
+@attribute [StreamRendering]
+@inject ICustomerService CustomerService
+
+<PageTitle>Projekt</PageTitle>
+
+<h1>Projekt</h1>
+
+<p>Projekt:</p>
+
+@if (customers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var customer in customers)
+        {
+            <tr>
+                <td>@customer.Id</td>
+                <td>@customer.Name</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    
+    private List<Business.Models.Customer> customers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers = await CustomerService.GetCustomersAsync(CancellationToken.None);
+    }
+}
