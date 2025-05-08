@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+builder.Services.AddDbContext<AppDbContext>(opt =>
+    opt.UseSqlite("Data Source=../Data/project.db"));
 builder.Services.AddIdentity<UserEntity,IdentityRole>(x =>
 {
     x.User.RequireUniqueEmail = true;
@@ -27,6 +28,13 @@ var app = builder.Build();
 app.UseHsts();
 app.UseHttpsRedirection();
 app.UseRouting();
+
+using (var scope = app.Services.CreateScope())
+{
+    var ctx = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    ctx.Database.Migrate();
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
