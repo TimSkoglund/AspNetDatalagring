@@ -41,3 +41,4 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
             ? new StatusResult<Status> { Succeeded = true, StatusCode = 200, Result = result.Result }
             : new StatusResult<Status> { Succeeded = false, StatusCode = result.StatusCode, Error = result.Error };
     }
+}

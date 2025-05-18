@@ -1,0 +1,55 @@
+﻿@model ProjectViewModel
+
+<div class="project card" data-project-id="1">
+    <div class="card-header">
+        <div class="project-image">
+            <img src="/images/projects/project-template-purple.svg" alt="template project">
+        </div>
+        <span class="project-name">Website Redesign</span>
+        <span class="client-name">GitLab Inc.</span>
+
+        <div id="project-account-container">
+            <button type="button" data-type="dropdown" data-target="#project-dropdown-1" class="btn-action">
+                <i class="fa-solid fa-ellipsis"></i>
+            </button>
+            <div id="project-dropdown-1" class="dropdown">
+                <nav class="dropdown-actions">
+                    <button data-type="modal" data-target="#edit-project-modal" class="dropdown-action">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Edit</span>
+                    </button>
+                    <button class="dropdown-action" href="#">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <span>Add Member</span>
+                    </button>
+                </nav>
+                <div class="dropdown-body">
+                    <div class="divider"></div>
+                    <nav class="dropdown-actions">
+                        <a class="dropdown-action remove" href="#">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>Delete Project</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <p>It is necessary to develop a website redesign in a corporate style.</p>
+    </div>
+    <div class="card-footer">
+        <div class="badge badge-warning">
+            <i class="fa-solid fa-clock"></i>
+            <span>5 day left</span>
+        </div>
+        <div class="members">
+            <div class="user-image">
+                <img src="/images/users/user-template-male-green.svg" alt="template user">
+            </div>
+            <div class="user-image">
+                <img src="/images/users/user-template-male-green.svg" alt="template user">
+            </div>
+        </div>
+    </div>
+</div>
