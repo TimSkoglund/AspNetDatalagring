@@ -15,13 +15,13 @@ public class SignUpViewModel
     public string LastName { get; set; } = null!;
 
     [Required]
-    [RegularExpression(@"")]
-    [Display(Name = "Email", Prompt = "Enter email")]
+    [RegularExpression("^$", ErrorMessage = "Invaled email address")]
+    [Display(Name = "Email", Prompt = "Enter email address")]
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; } = null!;
 
     [Required]
-    [RegularExpression(@"")]
+    [RegularExpression("^$", ErrorMessage ="Invaled password")]
     [Display(Name = "Password", Prompt = "Enter password")]
     [DataType(DataType.Password)]
     public string Password { get; set; } = null!;
@@ -33,5 +33,5 @@ public class SignUpViewModel
     public string ConfirmPassword { get; set; } = null!;
 
     [Range(typeof(bool), "true", "true")]
-    public bool TermsAndCondition { get; set; }
+    public bool Terms { get; set; }
 }

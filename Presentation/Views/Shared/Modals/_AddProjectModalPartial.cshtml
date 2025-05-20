@@ -30,8 +30,10 @@
                             <span class="form-select-text"></span>
                         </button>
                         <ul class="form-select-options">
-                            <li class="form-select-option" data-value="1">Client 1</li>
-                            <li class="form-select-option" data-value="2">Client 2</li>
+                            @foreach(var option in Model.Clients)
+                            {
+                                <li class="form-select-option" data-value="@option.Value">@option.Text</li>
+                            }
                         </ul>
                         <input type="hidden" name="client-select-value" />
                     </div>
@@ -82,8 +84,10 @@
                             <span class="form-select-text"></span>
                         </button>
                         <ul class="form-select-options">
-                            <li class="form-select-option" data-value="1">Tim Skoglund</li>
-                            <li class="form-select-option" data-value="2">Daniel Toivonen</li>
+                            @foreach (var option in Model.Members)
+                            {
+                                <li class="form-select-option" data-value="@option.Value">@option.Text</li>
+                            }
                         </ul>
                         <input type="hidden" name="member-select-value" />
                     </div>
